@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+    <title>CS172</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+<script type="text/javascript" src="{{url_for('static', filename='js/myJava.js')}}"></script>
+
+<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+
+<style>
+#my-map {
+	width:100%;
+	height:600px;
+}
+</style>
+</head>
+
+<body>
+<h1 id="demo" class="greeting">CS 172 Final Project</h1>
+    <form method="POST" action="">
+        <div class="search">
+            <input type="text" name="query" id="searchVal" onkeypress="handle(event)" class="searchbar" type="text" placeholder="Search..">
+        </div>
+    </form>
+    <br />
+    <div class = "map">
+    <div id="my-map"></div>
+</div>
+
+<script type="text/javascript">
+window.onload = function () {
+    var basemap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	});
+
+    $.getJSON("/static/css/stations.geojson", function(data) 
+    {
+       
+    var geojson = L.geoJson(data, 
+    {
+      onEachFeature: function (feature, layer) 
+      {
+        layer.bindPopup(feature.properties.Area_Name);
+      }
+    });
+    var map_data = {{results|tojson}};
+    //console.log(map_data[1].infobox);
+    var mapOptions = {
+        center: [37.179022, -93.4364078],
+        autoPan: true,
+        zoom: 4
+
+    }
+
+    var map = L.map('my-map',mapOptions);
+//    .setView([0.0,-10.0], 2);
+    basemap.addTo(map);
+    //geojson.addTo(map);
+    var maplat = '{{userlat}}';
+    var mapltd = '{{userltd}}';
+    console.log(maplat);
+    var arrayOfLatLngs = [];
+    for(var i = 0; i < map_data.length; i++)
+    {
+    // L.marker([map_data[i].lat, map_data[i].lng]).addTo(map)
+    // .bindPopup(map_data[i].infobox)
+     var test = [map_data[i].lat,map_data[i].lng];
+     arrayOfLatLngs.push(test);
+     var text = map_data[i].infobox;
+     var iconOptions = { iconUrl: map_data[i].icon, iconSize: [25,25]}
+     var customIcon = L.icon(iconOptions);
+    L.marker(test, {
+        title: (map_data[i].infobox),
+        clickable: true,
+        icon: customIcon,
+        pane: (map_data[i].infobox)
+        }
+).addTo(map)
+    .bindPopup(text);
+
+        
+        console.log(arrayOfLatLngs);
+    }
+
+    var bounds = new L.LatLngBounds(arrayOfLatLngs);
+    map.fitBounds(bounds);
+    // var test1 = [map_data[0].lat,map_data[0].lng];
+    // map.setView(test1,11, {animation : true});
+  });
+  
+}
+</script>
+</body>
+</html>

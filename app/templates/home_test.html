@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+   <html lang="en" dir="lrt">
+
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Welcome!</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+        
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='js/myJava.js')}}"></script>
+    
+        {{"decoupled-map"|googlemap_js(37.4419, -122.1419, markers=[(37.4419, -122.1419)])}}
+        <!-- {{mymap.js}} -->
+        {{sndmap.js}}
+    </head>
+
+    <body>
+
+      
+        <div class="search">
+            <div>
+                <h1 id="demo" class="greeting">Enter a Query!</h1>
+            </div>
+            <form action="" method="do_POST" >
+                <input id="searchVal" onkeypress="handle(event)" class="searchbar" type="text" placeholder="Search..">
+                <button type="submit">Search</button>
+            </form>
+           
+        </br>
+        
+            
+            <!-- {{mymap.html}} -->
+            {{sndmap.html}}
+
+        </div>
+    </body>
+</html>
