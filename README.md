@@ -1,1 +1,2 @@
-# finalproject-bah-team
+# Twitter Search Engine
+Information Retrieval
