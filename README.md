@@ -3,7 +3,7 @@ Information Retrieval
 
 ### Lanaugages and Frameworks Used
 * Backend: Elasticsearch, Python
-* Frontend: Flask
+* Frontend: OpenStreetMap, Flask
 
 ### Capabilities
 * Is able to store > 2GB of tweet data for fast retrieval. 
